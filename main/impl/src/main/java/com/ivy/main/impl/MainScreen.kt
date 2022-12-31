@@ -1,6 +1,7 @@
 package com.ivy.main.impl
 
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -62,11 +63,13 @@ private fun UI(
                 onSwipeRight = { switchTabs(onEvent) }
             )
     ) {
-        when (selectedTab) {
-            Tab.Home -> HomePreviewSafeTab()
-            Tab.Accounts -> AccountPreviewSafeTab()
-        }
-
+        Crossfade(targetState = selectedTab,
+            content = {
+                when (it) {
+                    Tab.Home -> HomePreviewSafeTab()
+                    Tab.Accounts -> AccountPreviewSafeTab()
+                }
+            })
         // region Bottom bar
         MainBottomBar(
             visible = bottomBarVisible,
